@@ -43,7 +43,7 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { name: "Workspace", href: "/", icon: Building2 },
+  { name: "Workspace", href: "/workspace", icon: Building2 },
   { name: "Task Ledger", href: "/tasks", icon: ListTodo },
   { name: "Proof Trail", href: "/proof", icon: History },
   { name: "Effort Meter", href: "/effort", icon: Gauge },
@@ -68,7 +68,7 @@ export function AppTopbar() {
           <SheetContent side="left" className="w-64 bg-card/95 p-0">
             <SheetHeader className="h-14 border-b border-border px-6 flex justify-center text-left">
               <SheetTitle>
-                <NavLink to="/" className="flex items-center gap-1 font-semibold" onClick={() => setOpen(false)}>
+                <NavLink to="/workspace" className="flex items-center gap-1 font-semibold" onClick={() => setOpen(false)}>
                   <EffrtLogo className="size-7 text-foreground shrink-0" />
                   <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent text-lg font-bold tracking-tight">
                     EFFRT
@@ -81,7 +81,7 @@ export function AppTopbar() {
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  end={item.href === "/"}
+                  end={item.href === "/workspace"}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
                     cn(

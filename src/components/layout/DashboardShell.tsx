@@ -4,7 +4,7 @@ import { AppTopbar } from "./AppTopbar"
 
 export function DashboardShell() {
   return (
-    <div className="min-h-screen bg-background text-foreground dark">
+    <div className="min-h-screen bg-transparent text-foreground dark">
       {/* Sidebar - hidden on mobile, visible on desktop */}
       <div className="hidden md:block">
         <AppSidebar />
