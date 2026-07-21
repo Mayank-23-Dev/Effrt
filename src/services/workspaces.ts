@@ -75,6 +75,21 @@ export const workspaceService = {
     }
   },
 
+  async getWorkspace(id: string): Promise<Workspace | null> {
+    if (isSupabaseConfigured && supabase) {
+      const { data, error } = await supabase
+        .from('workspaces')
+        .select()
+        .eq('id', id)
+        .maybeSingle()
+      if (error) throw error
+      return data
+    } else {
+      const ws = mockDB.get().workspaces.find((w: any) => w.id === id)
+      return ws || null
+    }
+  },
+
   subscribeToChanges(workspaceId: string, onUpdate: () => void): () => void {
     const client = supabase
     if (isSupabaseConfigured && client) {
