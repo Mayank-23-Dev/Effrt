@@ -166,7 +166,7 @@ export default function StandupPage() {
   return (
     <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto w-full">
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-950 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white uppercase flex items-center gap-2">
             <CalendarRange className="size-8 text-zinc-400" /> Standup Digest
@@ -186,8 +186,8 @@ export default function StandupPage() {
           
           {/* Daily inputs form (Left/Center Column) */}
           <div className="lg:col-span-3 flex flex-col gap-8">
-            <Card className="bg-zinc-950/20 border-zinc-900 rounded-none">
-              <CardHeader className="border-b border-zinc-900 py-4 px-6 flex flex-row items-center justify-between">
+            <Card className="bg-card/40 border-zinc-900 rounded-xl shadow-md">
+              <CardHeader className="border-b border-zinc-900/60 py-4 px-6 flex flex-row items-center justify-between">
                 <CardTitle className="text-xs font-bold uppercase tracking-wider text-zinc-200">
                   Today's Standup Entries
                 </CardTitle>
@@ -204,7 +204,7 @@ export default function StandupPage() {
                     No members in workspace. Go to the Workspace tab to join.
                   </div>
                 ) : (
-                  <div className="divide-y divide-zinc-900">
+                  <div className="divide-y divide-zinc-900/60">
                     {members.map((m) => {
                       const todayStr = new Date().toISOString().split("T")[0]
                       const hasSubmittedToday = standups.some(s => s.member_id === m.id && s.date === todayStr)
@@ -221,18 +221,18 @@ export default function StandupPage() {
                               </div>
                               <span className="text-xs font-semibold text-zinc-200 truncate">{m.name}</span>
                               {hasSubmittedToday ? (
-                                <span className="bg-emerald-950/30 text-emerald-400 border border-emerald-950 font-mono text-[8px] uppercase px-1.5 py-0.5">
+                                <span className="bg-emerald-950/30 text-emerald-400 border border-emerald-950 font-mono text-[8px] uppercase px-1.5 py-0.5 rounded">
                                   Submitted
                                 </span>
                               ) : (
-                                <span className="bg-zinc-900/60 text-zinc-500 border border-zinc-900 font-mono text-[8px] uppercase px-1.5 py-0.5">
+                                <span className="bg-zinc-900/60 text-zinc-500 border border-zinc-900 font-mono text-[8px] uppercase px-1.5 py-0.5 rounded">
                                   Awaiting
                                 </span>
                               )}
                             </div>
 
                             {isSlacking && (
-                              <span className="bg-white text-black font-mono text-[8px] uppercase tracking-widest font-extrabold px-2 py-0.5 border border-white animate-pulse flex items-center gap-1">
+                              <span className="bg-white text-black font-mono text-[8px] uppercase tracking-widest font-extrabold px-2 py-0.5 border border-white animate-pulse flex items-center gap-1 rounded-lg">
                                 <AlertTriangle className="size-2.5 stroke-[2.5]" /> Ghost Alert
                               </span>
                             )}
@@ -244,13 +244,13 @@ export default function StandupPage() {
                               placeholder="What I did today / blocker details..."
                               value={inputValues[m.id] || ""}
                               onChange={(e) => handleInputChange(m.id, e.target.value)}
-                              className="bg-zinc-950 border-zinc-900 text-xs h-9 focus-visible:ring-1 focus-visible:ring-zinc-700 flex-1"
+                              className="bg-zinc-950 border-zinc-900 text-xs h-9 focus-visible:ring-1 focus-visible:ring-zinc-700 flex-1 rounded-lg"
                             />
                             <Button
                               onClick={() => handleSaveStandup(m.id)}
                               disabled={savingId === m.id || !(inputValues[m.id] || "").trim()}
                               size="sm"
-                              className="h-9 px-3 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white rounded-none shrink-0"
+                              className="h-9 px-3 bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white rounded-lg shrink-0"
                             >
                               {savingId === m.id ? (
                                 <Loader2 className="size-3.5 animate-spin" />
@@ -270,8 +270,8 @@ export default function StandupPage() {
 
           {/* AI digest area (Right Column) */}
           <div className="lg:col-span-2 flex flex-col gap-8">
-            <Card className="bg-zinc-950/20 border-zinc-900 rounded-none h-fit">
-              <CardHeader className="border-b border-zinc-900 py-4 px-6">
+            <Card className="bg-card/40 border-zinc-900 rounded-xl shadow-md h-fit">
+              <CardHeader className="border-b border-zinc-900/60 py-4 px-6">
                 <CardTitle className="text-xs font-bold uppercase tracking-widest text-zinc-200 flex items-center gap-2">
                   <Sparkles className="size-4 text-white" /> AI Executive summary
                 </CardTitle>
@@ -284,7 +284,7 @@ export default function StandupPage() {
                 <Button
                   onClick={handleGenerateDigest}
                   disabled={generatingDigest || members.length === 0}
-                  className="w-full h-10 text-xs font-semibold uppercase bg-white hover:bg-zinc-200 text-black rounded-none flex items-center justify-center gap-2"
+                  className="w-full h-10 text-xs font-semibold uppercase bg-white hover:bg-zinc-200 text-black rounded-lg flex items-center justify-center gap-2"
                 >
                   {generatingDigest ? (
                     <>
@@ -298,7 +298,7 @@ export default function StandupPage() {
                 </Button>
 
                 {digest && (
-                  <div className="border border-zinc-800 bg-zinc-950/40 p-4 font-mono text-xxs leading-relaxed text-zinc-300 whitespace-pre-wrap">
+                  <div className="border border-zinc-800 bg-zinc-950/40 p-4 font-mono text-xxs leading-relaxed text-zinc-300 whitespace-pre-wrap rounded-lg shadow-inner">
                     {digest}
                   </div>
                 )}

@@ -45,7 +45,7 @@ function TaskCard({ task, members }: TaskCardProps) {
       style={style}
       {...listeners}
       {...attributes}
-      className={`p-4 bg-zinc-950 border text-left rounded-none cursor-grab active:cursor-grabbing hover:border-zinc-700 transition-colors flex flex-col gap-3 group relative select-none ${
+      className={`p-4 bg-zinc-950/40 border text-left rounded-lg cursor-grab active:cursor-grabbing hover:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col gap-3 group relative select-none ${
         isOverdue ? "border-red-950/80 bg-red-950/5" : "border-zinc-900"
       }`}
     >
@@ -85,11 +85,11 @@ function KanbanColumn({ id, title, tasks, members }: KanbanColumnProps) {
   return (
     <div
       ref={setNodeRef}
-      className={`flex flex-col gap-4 p-4 border border-zinc-900 bg-zinc-950/10 min-h-[480px] transition-colors rounded-none ${
+      className={`flex flex-col gap-4 p-4 border border-zinc-900 bg-card/20 min-h-[480px] transition-colors rounded-xl shadow-md ${
         isOver ? "bg-zinc-900/10 border-zinc-700" : ""
       }`}
     >
-      <div className="flex items-center justify-between border-b border-zinc-900 pb-2">
+      <div className="flex items-center justify-between border-b border-zinc-900/60 pb-2">
         <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
           {title} ({tasks.length})
         </h3>
@@ -100,7 +100,7 @@ function KanbanColumn({ id, title, tasks, members }: KanbanColumnProps) {
           <TaskCard key={task.id} task={task} members={members} />
         ))}
         {tasks.length === 0 && (
-          <div className="text-center py-16 text-[10px] font-mono text-zinc-600 border border-dashed border-zinc-900">
+          <div className="text-center py-16 text-[10px] font-mono text-zinc-600 border border-dashed border-zinc-900/60 rounded-lg">
             No tasks in this stage
           </div>
         )}
@@ -196,7 +196,6 @@ export default function TaskLedgerPage() {
     try {
       const currentMemberId = localStorage.getItem(`effrt_current_member_id_${activeWorkspaceId}`) || "member-mayank-uuid"
       await dbService.updateTaskStatus(activeWorkspaceId, taskId, currentMemberId, newStatus)
-      // Broadcast update
       window.dispatchEvent(new CustomEvent("effrt_db_sync"))
     } catch (e) {
       console.error("Failed to drag and update task status:", e)
@@ -242,7 +241,7 @@ export default function TaskLedgerPage() {
     <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto w-full">
       
       {/* Title Header with Add Task Dialog Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-950 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white uppercase flex items-center gap-2">
             <ListTodo className="size-8 text-zinc-400" /> Task Ledger
@@ -255,12 +254,12 @@ export default function TaskLedgerPage() {
         {/* Create Task Dialog */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger render={
-            <Button className="h-10 text-xs font-semibold uppercase bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white rounded-none flex items-center gap-2">
+            <Button className="h-10 text-xs font-semibold uppercase bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white rounded-lg flex items-center gap-2">
               <Plus className="size-4" /> Create Task
             </Button>
           } />
-          <DialogContent className="max-w-md bg-zinc-950 border border-zinc-900 text-zinc-200 rounded-none p-6 shadow-2xl">
-            <DialogHeader className="border-b border-zinc-900 pb-3">
+          <DialogContent className="max-w-md bg-zinc-950 border border-zinc-900 text-zinc-200 rounded-xl p-6 shadow-2xl">
+            <DialogHeader className="border-b border-zinc-900/60 pb-3">
               <DialogTitle className="text-sm font-bold uppercase tracking-wider text-white">Create Workspace Task</DialogTitle>
             </DialogHeader>
 
@@ -272,7 +271,7 @@ export default function TaskLedgerPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  className="bg-zinc-950 border-zinc-900 text-xs h-10 focus-visible:ring-1 focus-visible:ring-zinc-700"
+                  className="bg-zinc-950 border-zinc-900 text-xs h-10 focus-visible:ring-1 focus-visible:ring-zinc-700 rounded-lg"
                 />
               </div>
 
@@ -282,7 +281,7 @@ export default function TaskLedgerPage() {
                   <select
                     value={assigneeId}
                     onChange={(e) => setAssigneeId(e.target.value)}
-                    className="bg-zinc-950 border border-zinc-900 text-xs h-10 px-3 outline-none focus:border-zinc-700 text-zinc-300 font-mono"
+                    className="bg-zinc-950 border border-zinc-900 text-xs h-10 px-3 outline-none focus:border-zinc-700 text-zinc-300 font-mono rounded-lg"
                   >
                     <option value="unassigned">Unassigned</option>
                     {members.map(m => (
@@ -296,7 +295,7 @@ export default function TaskLedgerPage() {
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value as any)}
-                    className="bg-zinc-950 border border-zinc-900 text-xs h-10 px-3 outline-none focus:border-zinc-700 text-zinc-300 font-mono"
+                    className="bg-zinc-950 border border-zinc-900 text-xs h-10 px-3 outline-none focus:border-zinc-700 text-zinc-300 font-mono rounded-lg"
                   >
                     <option value="todo">To Do</option>
                     <option value="in_progress">In Progress</option>
@@ -311,11 +310,11 @@ export default function TaskLedgerPage() {
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="bg-zinc-950 border-zinc-900 text-xs h-10 focus-visible:ring-1 focus-visible:ring-zinc-700 font-mono text-zinc-300"
+                  className="bg-zinc-950 border-zinc-900 text-xs h-10 focus-visible:ring-1 focus-visible:ring-zinc-700 font-mono text-zinc-300 rounded-lg"
                 />
               </div>
 
-              <Button type="submit" className="w-full h-10 text-xs font-semibold uppercase bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white rounded-none mt-2 flex items-center justify-center gap-2">
+              <Button type="submit" className="w-full h-10 text-xs font-semibold uppercase bg-zinc-950 hover:bg-zinc-900 border border-zinc-800 text-white rounded-lg mt-2 flex items-center justify-center gap-2">
                 Submit Task <ArrowRight className="size-3.5" />
               </Button>
             </form>
@@ -325,19 +324,19 @@ export default function TaskLedgerPage() {
 
       {/* Stats Cards Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 no-print">
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Total Tasks</span>
           <span className="text-2xl font-black text-white font-mono">{totalTasks}</span>
         </div>
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Completed</span>
           <span className="text-2xl font-black text-emerald-400 font-mono">{completedTasksCount}</span>
         </div>
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">In Progress</span>
           <span className="text-2xl font-black text-zinc-300 font-mono">{inProgressTasksCount}</span>
         </div>
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Overdue</span>
           <span className="text-2xl font-black text-red-500 font-mono">{overdueTasksCount}</span>
         </div>

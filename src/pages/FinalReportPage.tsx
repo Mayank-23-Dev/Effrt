@@ -108,7 +108,7 @@ export default function FinalReportPage() {
       `}</style>
 
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-950 pb-6 no-print">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6 no-print">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white uppercase flex items-center gap-2">
             <FileText className="size-8 text-zinc-400" /> Final Report
@@ -122,7 +122,7 @@ export default function FinalReportPage() {
           <Button 
             onClick={() => loadData(activeWorkspaceId)}
             variant="outline"
-            className="h-10 text-xs font-semibold uppercase bg-zinc-950 border border-zinc-800 hover:border-zinc-700 text-white rounded-none flex items-center gap-2"
+            className="h-10 text-xs font-semibold uppercase bg-zinc-950 border border-zinc-800 hover:border-zinc-700 text-white rounded-lg flex items-center gap-2"
           >
             <RefreshCw className="size-3.5" /> Recompute
           </Button>
@@ -130,7 +130,7 @@ export default function FinalReportPage() {
           <Button 
             onClick={handlePrint}
             disabled={reports.length === 0}
-            className="h-10 text-xs font-semibold uppercase bg-white hover:bg-zinc-200 text-black rounded-none flex items-center gap-2"
+            className="h-10 text-xs font-semibold uppercase bg-white hover:bg-zinc-200 text-black rounded-lg flex items-center gap-2"
           >
             <Printer className="size-3.5" /> Print Statement / Save PDF
           </Button>
@@ -142,14 +142,14 @@ export default function FinalReportPage() {
           Aggregating contribution matrices...
         </div>
       ) : reports.length === 0 ? (
-        <div className="text-center py-20 font-mono text-xs text-zinc-600 border border-zinc-900 bg-zinc-950/20 no-print">
+        <div className="text-center py-20 font-mono text-xs text-zinc-600 border border-zinc-900 bg-card/40 rounded-xl shadow-md no-print">
           No contribution logs found to audit. Please add members and tasks to create reports.
         </div>
       ) : (
-        <div className="flex flex-col gap-6 printable-report bg-zinc-950/20 border border-zinc-900 p-8 rounded-none relative">
+        <div className="flex flex-col gap-6 printable-report bg-card/40 border border-zinc-900 p-8 rounded-xl shadow-md relative">
           
           {/* Statement Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-zinc-900 pb-6 gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-zinc-900/60 pb-6 gap-4">
             <div>
               <span className="text-zinc-400 text-xxs font-mono uppercase tracking-widest block">Security Hash Verified</span>
               <h2 className="text-xl font-black uppercase text-white tracking-wider mt-1">
@@ -174,7 +174,7 @@ export default function FinalReportPage() {
           <div className="overflow-x-auto mt-4">
             <table className="w-full text-left font-mono border-collapse">
               <thead>
-                <tr className="border-b border-zinc-900">
+                <tr className="border-b border-zinc-900/60">
                   <th className="py-3 text-zinc-500 text-[10px] uppercase font-bold tracking-wider">Member Name</th>
                   <th className="py-3 text-zinc-500 text-[10px] uppercase font-bold tracking-wider text-center">Tasks Done / Total</th>
                   <th className="py-3 text-zinc-500 text-[10px] uppercase font-bold tracking-wider text-center">On-Time Rate</th>
@@ -183,7 +183,7 @@ export default function FinalReportPage() {
                   <th className="py-3 text-zinc-200 text-[10px] uppercase font-black tracking-wider text-right">Contribution %</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-900">
+              <tbody className="divide-y divide-zinc-900/60">
                 {reports.map((m) => (
                   <tr key={m.memberId} className="hover:bg-zinc-950/10">
                     <td className="py-4 text-xs font-bold text-zinc-200">{m.name}</td>
@@ -198,11 +198,11 @@ export default function FinalReportPage() {
                     </td>
                     <td className="py-4 text-xs text-center flex items-center justify-center h-full pt-4">
                       {m.isGhost ? (
-                        <span className="bg-white text-black text-[8px] uppercase tracking-widest font-extrabold px-2 py-0.5 border border-white flex items-center gap-1">
+                        <span className="bg-white text-black text-[8px] uppercase tracking-widest font-extrabold px-2 py-0.5 border border-white flex items-center gap-1 rounded-lg">
                           <AlertTriangle className="size-2.5 stroke-[2.5]" /> Ghost
                         </span>
                       ) : (
-                        <span className="bg-zinc-950 border border-zinc-900 text-zinc-500 text-[8px] uppercase tracking-widest font-bold px-2 py-0.5 flex items-center gap-1">
+                        <span className="bg-zinc-950 border border-zinc-900 text-zinc-500 text-[8px] uppercase tracking-widest font-bold px-2 py-0.5 flex items-center gap-1 rounded-lg">
                           <CheckCircle className="size-2.5 text-emerald-400" /> Active
                         </span>
                       )}
@@ -217,7 +217,7 @@ export default function FinalReportPage() {
           </div>
 
           {/* Statement footer signature signoff area */}
-          <div className="border-t border-zinc-900 pt-8 mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="border-t border-zinc-900/60 pt-8 mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex flex-col gap-2">
               <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Weighted Contribution Formula</span>
               <p className="text-[9px] text-zinc-500 font-mono leading-relaxed max-w-sm">

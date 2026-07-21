@@ -63,7 +63,6 @@ export default function ProofTrailPage() {
     window.addEventListener("effrt_db_sync", handleSync)
     window.addEventListener("effrt_workspace_changed", handleCustomChange)
     
-    // Subscribe to Postgres changes on workspace (realtime)
     const unsubscribe = dbService.subscribeToChanges(activeWorkspaceId, () => {
       loadData(activeWorkspaceId)
     })
@@ -122,7 +121,7 @@ export default function ProofTrailPage() {
   return (
     <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto w-full">
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-950 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white uppercase flex items-center gap-2">
             <History className="size-8 text-zinc-400" /> Proof Trail
@@ -132,7 +131,7 @@ export default function ProofTrailPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xxs font-mono text-zinc-500 border border-zinc-900 bg-zinc-950/20 px-3 py-1.5 rounded-none">
+        <div className="flex items-center gap-2 text-xxs font-mono text-zinc-500 border border-zinc-900 bg-zinc-950/20 px-3 py-1.5 rounded-lg">
           <ShieldCheck className="size-4 text-emerald-400" />
           <span>Real-time channel active</span>
         </div>
@@ -140,19 +139,19 @@ export default function ProofTrailPage() {
 
       {/* Stats Cards Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 no-print">
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Ledger Records</span>
           <span className="text-2xl font-black text-white font-mono">{totalRecords}</span>
         </div>
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Verified Hashes</span>
           <span className="text-2xl font-black text-emerald-400 font-mono">{verifiedHashes}</span>
         </div>
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Most Active</span>
           <span className="text-xs font-bold text-zinc-200 truncate font-mono mt-2" title={mostActiveMember}>{mostActiveMember}</span>
         </div>
-        <div className="p-4 bg-zinc-950/20 border border-zinc-900 rounded-none flex flex-col justify-between h-20">
+        <div className="p-4 bg-card/40 border border-zinc-900 rounded-xl flex flex-col justify-between h-20 shadow-md">
           <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500 font-mono">Events / Day</span>
           <span className="text-2xl font-black text-zinc-300 font-mono">{actionRate}</span>
         </div>
@@ -163,8 +162,8 @@ export default function ProofTrailPage() {
           Retrieving audit timeline from ledger...
         </div>
       ) : (
-        <Card className="bg-zinc-950/20 border-zinc-900 rounded-none overflow-hidden">
-          <CardHeader className="border-b border-zinc-900 py-4 px-6 flex flex-row items-center justify-between">
+        <Card className="bg-card/40 border-zinc-900 rounded-xl shadow-md overflow-hidden">
+          <CardHeader className="border-b border-zinc-900/60 py-4 px-6 flex flex-row items-center justify-between">
             <div className="text-sm font-bold uppercase tracking-wider text-zinc-200">
               Immutable Activity Feed ({trail.length} records)
             </div>
@@ -184,18 +183,17 @@ export default function ProofTrailPage() {
             ) : (
               <div className="overflow-x-auto">
                 <Table>
-                  <TableHeader className="border-b border-zinc-900 bg-zinc-950/40">
-                    <TableRow className="hover:bg-transparent border-zinc-900">
+                  <TableHeader className="border-b border-zinc-900/60 bg-zinc-950/40">
+                    <TableRow className="hover:bg-transparent border-zinc-900/60">
                       <TableHead className="text-zinc-400 font-mono text-xxs uppercase tracking-wider h-10 w-[200px]">Developer</TableHead>
                       <TableHead className="text-zinc-400 font-mono text-xxs uppercase tracking-wider h-10">Action log</TableHead>
                       <TableHead className="text-zinc-400 font-mono text-xxs uppercase tracking-wider h-10 w-[250px]">Task Reference</TableHead>
                       <TableHead className="text-zinc-400 font-mono text-xxs uppercase tracking-wider h-10 text-right w-[120px]">Time</TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody className="divide-y divide-zinc-900">
+                  <TableBody className="divide-y divide-zinc-900/60">
                     {trail.map((entry) => (
-                      <TableRow key={entry.id} className="hover:bg-zinc-900/5 border-zinc-900">
-                        {/* Member Column */}
+                      <TableRow key={entry.id} className="hover:bg-zinc-900/5 border-zinc-900/60">
                         <TableCell className="py-3 px-4">
                           <div className="flex items-center gap-2">
                             <div className="size-6 bg-zinc-900 border border-zinc-800 flex items-center justify-center font-bold text-[8px] text-zinc-300 rounded-full shrink-0">
@@ -207,15 +205,13 @@ export default function ProofTrailPage() {
                           </div>
                         </TableCell>
                         
-                        {/* Action Column */}
                         <TableCell className="py-3 px-4 font-mono text-xxs text-zinc-300">
                           {entry.action_type}
                         </TableCell>
 
-                        {/* Task Title Column */}
                         <TableCell className="py-3 px-4">
                           {entry.taskTitle ? (
-                            <span className="text-xs text-zinc-400 bg-zinc-900/60 border border-zinc-900 px-2.5 py-1 inline-block truncate max-w-[230px] font-mono text-xxs">
+                            <span className="text-xs text-zinc-400 bg-zinc-900/60 border border-zinc-900 px-2.5 py-1 inline-block truncate max-w-[230px] font-mono text-xxs rounded">
                               {entry.taskTitle}
                             </span>
                           ) : (
@@ -223,7 +219,6 @@ export default function ProofTrailPage() {
                           )}
                         </TableCell>
 
-                        {/* Time Column */}
                         <TableCell className="py-3 px-4 text-right font-mono text-xxs text-zinc-500 whitespace-nowrap">
                           {getRelativeTime(entry.timestamp)}
                         </TableCell>
