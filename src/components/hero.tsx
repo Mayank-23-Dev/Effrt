@@ -6,7 +6,7 @@ import { ArrowRightIcon } from "lucide-react";
 
 export function HeroSection() {
 	return (
-		<section>
+		<section id="home" className="scroll-mt-24">
 			<div className="relative flex flex-col items-center justify-center gap-5 px-4 py-12 md:px-4 md:py-24 lg:py-28">
 				{/* X Faded Borders & Shades */}
 				<div

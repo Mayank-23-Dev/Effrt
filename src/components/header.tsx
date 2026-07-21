@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { cn } from "@/lib/utils";
 import { EffrtLogo } from "@/components/shared/EffrtLogo";
 import { useScroll } from "@/hooks/use-scroll";
@@ -7,17 +8,39 @@ import { MobileNav } from "@/components/mobile-nav";
 
 export const navLinks = [
 	{
+		label: "Home",
+		href: "#home",
+	},
+	{
 		label: "Features",
 		href: "#features",
+	},
+	{
+		label: "Ledger",
+		href: "#sandbox",
 	},
 	{
 		label: "FAQs",
 		href: "#faqs",
 	},
+	{
+		label: "Contact",
+		href: "#contact",
+	},
 ];
 
 export function Header() {
 	const scrolled = useScroll(10);
+
+	const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+		if (href.startsWith("#")) {
+			e.preventDefault();
+			const element = document.querySelector(href);
+			if (element) {
+				element.scrollIntoView({ behavior: "smooth" });
+			}
+		}
+	};
 
 	return (
 		<header
@@ -49,7 +72,15 @@ export function Header() {
 				<div className="hidden items-center gap-2 md:flex">
 					<div>
 						{navLinks.map((link) => (
-							<Button key={link.label} size="sm" variant="ghost" render={<a href={link.href} />} nativeButton={false}>{link.label}</Button>
+							<Button 
+								key={link.label} 
+								size="sm" 
+								variant="ghost" 
+								render={<a href={link.href} onClick={(e) => handleScroll(e, link.href)} />} 
+								nativeButton={false}
+							>
+								{link.label}
+							</Button>
 						))}
 					</div>
 					<Button size="sm" variant="outline" render={<a href="/login" />} nativeButton={false}>

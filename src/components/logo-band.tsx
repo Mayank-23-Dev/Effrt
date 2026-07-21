@@ -1,4 +1,3 @@
-import type React from "react";
 
 export function LogoBand() {
   return (

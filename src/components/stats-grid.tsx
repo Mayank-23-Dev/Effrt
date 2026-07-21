@@ -1,4 +1,3 @@
-import type React from "react";
 import { DecorIcon } from "@/components/decor-icon";
 
 export function StatsGrid() {

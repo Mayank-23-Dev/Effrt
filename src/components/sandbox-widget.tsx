@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Play, ShieldCheck, Terminal, CheckCircle2, GitBranch, ListChecks, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -15,7 +15,7 @@ export function SandboxWidget() {
     { id: "init-2", time: "12:04:11", type: "info", text: "Database connection verified. Awaiting workspace activity..." },
   ]);
   const [activeSimulation, setActiveSimulation] = useState<string | null>(null);
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const addLog = (text: string, type: "info" | "success" | "hash" | "action" = "info") => {
     const time = new Date().toTimeString().split(" ")[0];
@@ -24,7 +24,13 @@ export function SandboxWidget() {
   };
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [logs]);
 
   const simulateGitPush = () => {
@@ -88,7 +94,7 @@ export function SandboxWidget() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-7xl border-x border-b border-zinc-900 bg-transparent px-6 py-16">
+    <section id="sandbox" className="mx-auto w-full max-w-7xl border-x border-b border-zinc-900 bg-transparent px-6 py-16 scroll-mt-24">
       <div className="text-center mb-12 flex flex-col items-center">
         <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
           Try the Contribution Ledger
@@ -159,7 +165,10 @@ export function SandboxWidget() {
           </div>
 
           {/* Terminal Logs View */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-2.5 custom-scrollbar">
+          <div 
+            className="flex-1 p-4 overflow-y-auto space-y-2.5 custom-scrollbar"
+            ref={scrollContainerRef}
+          >
             {logs.map((log) => (
               <div key={log.id} className="flex gap-2.5 items-start">
                 <span className="text-zinc-600 select-none">[{log.time}]</span>
@@ -175,7 +184,6 @@ export function SandboxWidget() {
                 </span>
               </div>
             ))}
-            <div ref={terminalEndRef} />
           </div>
         </div>
       </div>

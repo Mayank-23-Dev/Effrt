@@ -41,17 +41,35 @@ export function AuthPage() {
 								</InputGroupAddon>
 							</InputGroup>
 
-							<Button className="w-full" size="sm" type="button">
+							<Button 
+								className="w-full" 
+								size="sm" 
+								type="button" 
+								render={<a href="/workspace" />} 
+								nativeButton={false}
+							>
 								Continue With Email
 							</Button>
 						</form>
 						<AuthDivider>OR</AuthDivider>
 						<div className="grid grid-cols-2 gap-2 space-y-2">
-							<Button className="w-full" type="button" variant="outline">
+							<Button 
+								className="w-full" 
+								type="button" 
+								variant="outline" 
+								render={<a href="/workspace" />} 
+								nativeButton={false}
+							>
 								<GoogleIcon data-icon="inline-start" />
 								Google
 							</Button>
-							<Button className="w-full" type="button" variant="outline">
+							<Button 
+								className="w-full" 
+								type="button" 
+								variant="outline" 
+								render={<a href="/workspace" />} 
+								nativeButton={false}
+							>
 								<GithubIcon data-icon="inline-start" />
 								GitHub
 							</Button>
