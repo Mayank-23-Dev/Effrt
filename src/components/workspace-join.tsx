@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card'
+import { Card, CardContent, CardFooter } from './ui/card'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs'
-import { dbService, Workspace, Member } from '../services/db'
-import { ShieldCheck, UserPlus, Flame } from 'lucide-react'
+import { dbService } from '../services/db'
+import type { Workspace, Member } from '../services/db'
+import { ShieldCheck, Flame } from 'lucide-react'
 
 interface WorkspaceJoinProps {
   onJoin: (workspace: Workspace, member: Member) => void

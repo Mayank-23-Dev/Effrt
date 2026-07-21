@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
+import { Card, CardContent } from './ui/card'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import { Badge } from './ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui/dialog'
-import { Task, Member, dbService } from '../services/db'
-import { Plus, Trash2, Calendar, User, Clock, AlertTriangle, CheckCircle, ArrowRight } from 'lucide-react'
+import { dbService } from '../services/db'
+import type { Task, Member } from '../services/db'
+import { Plus, Trash2, Calendar, AlertTriangle, CheckCircle } from 'lucide-react'
 
 interface KanbanBoardProps {
   workspaceId: string

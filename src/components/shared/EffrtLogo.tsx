@@ -1,0 +1,28 @@
+
+interface EffrtLogoProps {
+  className?: string
+}
+
+export function EffrtLogo({ className }: EffrtLogoProps) {
+  return (
+    <svg 
+      viewBox="0 0 1000 1000" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path 
+        d="M110.5 193C195 183 220 178 266.5 168.5C291 262 302 269 331 313C421.5 418.5 519.5 421.5 559 427.5C608 424.5 694 422.5 694 367C694 320 633 310.279 581 303C492 300 452.5 334.5 419 367C358 327 340.5 300.5 310 246C360 194 419 164 513 151C631.5 137 771 157.5 836 283C897 453.5 776.5 607 542 583C427.5 580 168 499.5 110.5 193Z" 
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+      <path 
+        d="M364 555.5C329 536.5 266 508.5 196.5 426.5C168.5 550 197 624.5 219.5 667.5C279.5 765.5 345 798.5 430 828.5C542 851.5 562 842.5 632.5 832.5C731 808.5 770.5 785 842.5 736.5C803.5 680 784 650.5 742.5 593.5C688 627.5 621.5 677.5 499.5 663.5C434 649.5 377 611 364 555.5Z" 
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+    </svg>
+  )
+}

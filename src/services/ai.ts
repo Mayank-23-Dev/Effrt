@@ -1,9 +1,4 @@
-import Groq from 'groq-sdk'
-
-const groqApiKey = import.meta.env.VITE_GROQ_API_KEY
-const isGroqConfigured = !!groqApiKey
-
-const groq = isGroqConfigured ? new Groq({ apiKey: groqApiKey, dangerouslyAllowBrowser: true }) : null
+import { groq, isGroqConfigured } from '../lib/groq'
 
 export interface StandupSummaryInput {
   memberName: string
