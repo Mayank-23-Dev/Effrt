@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DecorIcon } from "@/components/decor-icon";
 import { FullWidthDivider } from "@/components/full-width-divider";
 import { ArrowRightIcon } from "lucide-react";
+import heroPhoto from "@/assets/hero_photo.png";
 
 export function HeroSection() {
 	return (
@@ -43,7 +44,7 @@ export function HeroSection() {
 						"fade-in slide-in-from-bottom-10 animate-in fill-mode-backwards delay-100 duration-500 ease-out"
 					)}
 				>
-					Effort isn't a feeling. It's proof.
+					Effort isn't a thing. It's proof.
 				</h1>
 
 				<p
@@ -74,20 +75,11 @@ export function HeroSection() {
 				<DecorIcon className="size-4" position="bottom-right" />
 
 				<FullWidthDivider className="-top-px" />
-				<div className="overflow-hidden *:pointer-events-none *:aspect-video *:select-none">
+				<div className="overflow-hidden *:pointer-events-none *:select-none">
 					<img
-						alt="light app screen"
-						className="dark:hidden"
-						height="auto"
-						src="https://storage.efferd.com/screen/dashboard-light.webp"
-						width="auto"
-					/>
-					<img
-						alt="dark app screen"
-						className="hidden dark:block"
-						height="auto"
-						src="https://storage.efferd.com/screen/dashboard-dark.webp"
-						width="auto"
+						alt="EFFRT Hero Showcase"
+						className="w-full h-auto block"
+						src={heroPhoto}
 					/>
 				</div>
 				<FullWidthDivider className="-bottom-px" />
