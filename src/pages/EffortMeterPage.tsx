@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { dbService } from "@/services/db"
 import type { MemberEffort } from "@/services/db"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { getInitials } from "@/lib/utils"
 import { Gauge, AlertTriangle, CheckCircle, ShieldAlert as ShieldIcon } from "lucide-react"
 import {
   BarChart,
@@ -64,14 +65,6 @@ export default function EffortMeterPage() {
     }
   }, [activeWorkspaceId])
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map(n => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2)
-  }
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { cn } from "@/lib/utils"
+import { cn, getInitials } from "@/lib/utils"
 import { dbService } from "@/services/db"
 import { 
   Building2, 
@@ -123,14 +123,6 @@ export function AppSidebar() {
     }
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map(n => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2)
-  }
 
   return (
     <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col border-r border-border bg-card/60 backdrop-blur-md">

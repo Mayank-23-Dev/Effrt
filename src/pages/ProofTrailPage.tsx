@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { dbService } from "@/services/db"
 import type { ProofEntry } from "@/services/db"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
+import { getInitials } from "@/lib/utils"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { History, ShieldCheck, RefreshCw } from "lucide-react"
 
@@ -90,14 +91,6 @@ export default function ProofTrailPage() {
     return `${diffDays}d ago`
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map(n => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2)
-  }
 
   const totalRecords = trail.length
   const verifiedHashes = trail.length

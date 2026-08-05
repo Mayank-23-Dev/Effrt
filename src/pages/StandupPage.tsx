@@ -3,6 +3,7 @@ import { dbService } from "@/services/db"
 import type { Member, Standup } from "@/services/db"
 import { aiService } from "@/services/ai"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { getInitials } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { CalendarRange, Sparkles, AlertTriangle, Save, Loader2, RefreshCw } from "lucide-react"
@@ -154,14 +155,6 @@ export default function StandupPage() {
     return !hasToday && !hasYesterday
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map(n => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2)
-  }
 
   return (
     <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto w-full">
