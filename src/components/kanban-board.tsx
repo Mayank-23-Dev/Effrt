@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { dbService } from '../services/db'
 import type { Task, Member } from '../services/db'
 import { Plus, Trash2, Calendar, AlertTriangle, CheckCircle } from 'lucide-react'
+import { getInitials } from '../lib/utils'
 
 interface KanbanBoardProps {
   workspaceId: string
@@ -104,12 +105,7 @@ export default function KanbanBoard({ workspaceId, currentMember, members, tasks
     if (!id) return '?'
     const member = members.find((m) => m.id === id)
     if (!member) return '?'
-    return member.name
-      .split(' ')
-      .map((w) => w[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2)
+    return getInitials(member.name)
   }
 
   const getMemberName = (id: string | null) => {

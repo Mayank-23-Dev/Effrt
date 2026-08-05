@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { dbService } from "@/services/db"
 import type { Workspace, Member } from "@/services/db"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { getInitials } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Copy, Check, Users, Key, Building2, Plus, ArrowRight, Loader2 } from "lucide-react"
@@ -238,14 +239,6 @@ export default function WorkspacePage() {
     }
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map(n => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2)
-  }
 
   return (
     <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto w-full">

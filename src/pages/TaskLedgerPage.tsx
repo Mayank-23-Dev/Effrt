@@ -3,6 +3,7 @@ import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core"
 import type { DragEndEvent } from "@dnd-kit/core"
 import { dbService } from "@/services/db"
 import type { Task, Member } from "@/services/db"
+import { getInitials } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
@@ -28,14 +29,6 @@ function TaskCard({ task, members }: TaskCardProps) {
     : undefined
 
   const assignee = members.find(m => m.id === task.assignee_id)
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map(n => n[0])
-      .join("")
-      .toUpperCase()
-      .substring(0, 2)
-  }
 
   const isOverdue = task.due_date && new Date(task.due_date) < new Date() && task.status !== "done"
 
