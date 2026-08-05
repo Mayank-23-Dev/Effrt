@@ -7,15 +7,16 @@ import { getInitials } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { ListTodo, Plus, ArrowRight } from "lucide-react"
+import { ListTodo, Plus, ArrowRight, Trash2 } from "lucide-react"
 
 // Draggable Task Card
 interface TaskCardProps {
   task: Task
   members: Member[]
+  onDeleteTask: (taskId: string) => void
 }
 
-function TaskCard({ task, members }: TaskCardProps) {
+function TaskCard({ task, members, onDeleteTask }: TaskCardProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: task.id,
   })
@@ -42,7 +43,22 @@ function TaskCard({ task, members }: TaskCardProps) {
         isOverdue ? "border-red-950/80 bg-red-950/5" : "border-zinc-900"
       }`}
     >
-      <div className="text-xs font-semibold text-zinc-200">{task.title}</div>
+      <div className="flex justify-between items-start gap-2">
+        <div className="text-xs font-semibold text-zinc-200">{task.title}</div>
+        <button
+          type="button"
+          title="Delete task"
+          onClick={(e) => {
+            e.stopPropagation()
+            onDeleteTask(task.id)
+          }}
+          onPointerDown={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          className="text-zinc-600 hover:text-red-400 p-1 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity duration-200 shrink-0"
+        >
+          <Trash2 className="size-3.5" />
+        </button>
+      </div>
       
       <div className="flex items-center justify-between text-[10px] font-mono text-zinc-500">
         <div className="flex items-center gap-1.5 min-w-0">
@@ -68,9 +84,10 @@ interface KanbanColumnProps {
   title: string
   tasks: Task[]
   members: Member[]
+  onDeleteTask: (taskId: string) => void
 }
 
-function KanbanColumn({ id, title, tasks, members }: KanbanColumnProps) {
+function KanbanColumn({ id, title, tasks, members, onDeleteTask }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({
     id,
   })
@@ -90,7 +107,7 @@ function KanbanColumn({ id, title, tasks, members }: KanbanColumnProps) {
       
       <div className="flex flex-col gap-3">
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} members={members} />
+          <TaskCard key={task.id} task={task} members={members} onDeleteTask={onDeleteTask} />
         ))}
         {tasks.length === 0 && (
           <div className="text-center py-16 text-[10px] font-mono text-zinc-600 border border-dashed border-zinc-900/60 rounded-lg">
@@ -192,6 +209,17 @@ export default function TaskLedgerPage() {
       window.dispatchEvent(new CustomEvent("effrt_db_sync"))
     } catch (e) {
       console.error("Failed to drag and update task status:", e)
+      loadData(activeWorkspaceId)
+    }
+  }
+
+  const handleDeleteTask = async (taskId: string) => {
+    try {
+      setTasks(prev => prev.filter(t => t.id !== taskId))
+      await dbService.deleteTask(taskId)
+      window.dispatchEvent(new CustomEvent("effrt_db_sync"))
+    } catch (e) {
+      console.error("Failed to delete task:", e)
       loadData(activeWorkspaceId)
     }
   }
@@ -347,18 +375,21 @@ export default function TaskLedgerPage() {
               title="To Do"
               tasks={tasks.filter((t) => t.status === "todo")}
               members={members}
+              onDeleteTask={handleDeleteTask}
             />
             <KanbanColumn
               id="in_progress"
               title="In Progress"
               tasks={tasks.filter((t) => t.status === "in_progress")}
               members={members}
+              onDeleteTask={handleDeleteTask}
             />
             <KanbanColumn
               id="done"
               title="Done"
               tasks={tasks.filter((t) => t.status === "done")}
               members={members}
+              onDeleteTask={handleDeleteTask}
             />
           </div>
         </DndContext>
